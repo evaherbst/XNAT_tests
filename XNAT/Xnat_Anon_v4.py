@@ -188,7 +188,7 @@ df_anon.to_csv(os.path.join(myFolder, "dataframe_PHI_with_VR.txt"), index=False,
 
 df_anon = df_anon.rename(columns={"XNAT Code": 'Version \"6.5\"'})
 # optionally export the dataframe that has SQand OB identieid with "TBD"
-# df_anon["Version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_with_undetermined.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")
+# df_anon["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_with_undetermined.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")
 
 # now export version WITHOUT VR values that are not anonymised yet to test anonymisation of all other VR types
 

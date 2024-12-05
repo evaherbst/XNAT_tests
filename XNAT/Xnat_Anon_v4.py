@@ -16,7 +16,7 @@ import numpy as np
  
 
 # myFolder = "C:/Users/maxmo/"
-myFolder = "C:/Users/eherbst/git/xnat/Eva_tests/"
+myFolder = "C:/Users/eherbst/git/XNAT_tests/XNAT/"
 allTags_fileName = "DicomStandard_Nema_AllTags_PS3_6_2024d.csv"
 phiTags_fileName = "DicomStandard_Nema_PS3_15_2024d_E_Application_Level_Confidentiality_Profile_Attributes.csv"
 
@@ -98,6 +98,9 @@ UN_Anon = "\"ANON\"" # UN is unknown, apparently flexible data type so replace w
 
 
 #TODO need to add anonymisation for SQ and OB. It is not straightforward, e.g. for SQ which can have nested elements that need to be strings, numbers, dates etc
+
+#replace lower case x with upper case X
+df_anon["Tag"] = df_anon["Tag"].str.replace("x", "X")
 
 
 def replaceTagifExists(AnonType):
@@ -186,7 +189,7 @@ df_anon.to_csv(os.path.join(myFolder, "dataframe_PHI_with_VR.txt"), index=False,
 # replace header name "XNAT Code" with version, export XNAT code column as .txt file
 #NOTE this will not work (will still have "TBD") if unresolved_vr_list if there are ANY problematicTags (ie those where VR type has not been designated a replacement)
 
-df_anon = df_anon.rename(columns={"XNAT Code": 'version \"6.5\"'})
+# df_anon = df_anon.rename(columns={"XNAT Code": 'version \"6.5\"'})
 # optionally export the dataframe that has SQand OB identieid with "TBD"
 # df_anon["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_with_undetermined.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")
 
@@ -199,5 +202,13 @@ unresolvedVRTypes = "|".join(unsolved_vr_list)
 df_anon_INCOMPLETE = df_anon[~df_anon["VR"].str.contains(unresolvedVRTypes, na=False)]
 
 
-df_anon_INCOMPLETE["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_incomplete.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")              
+# df_anon_INCOMPLETE["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_incomplete_TEST_DEC5.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")              
+
+# Write a two-line header and the dataframe
+filePath = os.path.join(myFolder, "XNAT_code_incomplete_TEST_DEC5.txt")
+with open(filePath, "w", encoding="utf-8") as f:
+    f.write("version \"6.5\"\n")  # First line of the header
+    f.write("\n")  # Second line of the header, blank line
+    # export dataframe to csv without its column header
+    df_anon_INCOMPLETE["XNAT Code"].to_csv(f, index=False, header = False, quoting = csv.QUOTE_NONE, sep="\t")              
 

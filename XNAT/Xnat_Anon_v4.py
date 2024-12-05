@@ -186,9 +186,9 @@ df_anon.to_csv(os.path.join(myFolder, "dataframe_PHI_with_VR.txt"), index=False,
 # replace header name "XNAT Code" with version, export XNAT code column as .txt file
 #NOTE this will not work (will still have "TBD") if unresolved_vr_list if there are ANY problematicTags (ie those where VR type has not been designated a replacement)
 
-df_anon = df_anon.rename(columns={"XNAT Code": 'Version \"6.5\"'})
+df_anon = df_anon.rename(columns={"XNAT Code": 'version \"6.5\"'})
 # optionally export the dataframe that has SQand OB identieid with "TBD"
-# df_anon["Version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_with_undetermined.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")
+# df_anon["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_with_undetermined.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")
 
 # now export version WITHOUT VR values that are not anonymised yet to test anonymisation of all other VR types
 
@@ -199,5 +199,5 @@ unresolvedVRTypes = "|".join(unsolved_vr_list)
 df_anon_INCOMPLETE = df_anon[~df_anon["VR"].str.contains(unresolvedVRTypes, na=False)]
 
 
-df_anon_INCOMPLETE["Version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_incomplete.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")              
+df_anon_INCOMPLETE["version \"6.5\""].to_csv(os.path.join(myFolder, "XNAT_code_incomplete.txt"), index=False, quoting = csv.QUOTE_NONE, sep="\t")              
 
